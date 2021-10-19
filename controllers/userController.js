@@ -1,4 +1,4 @@
-const Laptop = require('../models/userModel');
+const User = require('../models/userModel');
 
 /* function getModel(req, res) {
   res.send('De momento no hay modelos disponibles');
@@ -22,7 +22,7 @@ function findUser(req, res) {
   const param = req.body;
   console.log(req.body);
 
-  user.find(param, (error, user) => {
+  User.find(param, (error, user) => {
     if (error) return res.status(404).send({ message: 'No user found', error });
 
     return res.status(200).send(user);
@@ -35,14 +35,13 @@ function changeUser(req, res) {
 
   user.findOneAndReplace(email, user, (err) => {
     if (err) return res.status(404).send({ message: 'No user model to replace found', err });
-    return res.status(200).send({ message: 'User data replaced', laptop });
+    return res.status(200).send({ message: 'User data replaced', user });
   });
 }
 
 function deleteUser(req, res) {
   const { email } = req.params;
   const user = new User(req.body);
-  console.log(email);
   user.findByIdAndRemove(email, (err, user) => {
     if (err) return res.status(500).send(err);
     if (!user) return res.status(404).send({ message: 'User not found' });
