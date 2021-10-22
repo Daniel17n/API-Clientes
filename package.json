@@ -1,6 +1,32 @@
 {
+<<<<<<< HEAD
   "dependencies": {
     "express": "^4.17.1",
     "mongoose": "^6.0.12"
+=======
+  "name": "api-clientes",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Daniel17n/API-Clientes.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Daniel17n/API-Clientes/issues"
+  },
+  "homepage": "https://github.com/Daniel17n/API-Clientes#readme",
+  "description": "",
+  "devDependencies": {
+    "eslint": "^7.32.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-import": "^2.25.2"
+>>>>>>> e2c704f92c36b2f69704b25d83e613332bd3450e
   }
 }
