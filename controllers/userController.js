@@ -42,9 +42,9 @@ function changeUser(req, res) {
 function deleteUser(req, res) {
   const { email } = req.params;
   const user = new User(req.body);
-  user.findByIdAndRemove(email, (err, user) => {
+  user.findByIdAndRemove(email, (err, nuser) => {
     if (err) return res.status(500).send(err);
-    if (!user) return res.status(404).send({ message: 'User not found' });
+    if (!nuser) return res.status(404).send({ message: 'User not found' });
     return res.status(200).send({ message: 'User deleted' });
   });
 }
