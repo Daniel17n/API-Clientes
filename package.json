@@ -3,5 +3,26 @@
     "express": "^4.17.1",
     "mongoose": "^6.0.12",
     "nodemon": "^2.0.14"
-  }
+  },
+  "devDependencies": {
+    "eslint": "^8.1.0"
+  },
+  "scripts": {
+    "start": "node server.js"
+  },
+  "name": "api-clientes",
+  "version": "1.0.0",
+  "main": "app.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Daniel17n/API-Clientes.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Daniel17n/API-Clientes/issues"
+  },
+  "homepage": "https://github.com/Daniel17n/API-Clientes#readme",
+  "description": ""
 }
