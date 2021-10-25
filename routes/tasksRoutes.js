@@ -1,13 +1,11 @@
 const { Router } = require('express');
-const tasksController = require('../controllers/userController');
+const tasksController = require('../controllers/tasksController');
 
 const tasksRouter = Router();
 
-// router.get('/model', laptopController.getModel);
-// router.get('/db', laptopController.getDB);
-tasksRouter.get('/', tasksController.findUser);
-tasksRouter.post('/', tasksController.addUser);
-tasksRouter.put('/:id', tasksController.changeUser);
-tasksRouter.delete('/:id', tasksController.deleteUser);
+tasksRouter.get('/', tasksController.findTasks);
+tasksRouter.post('/', tasksController.addTasks);
+tasksRouter.put('/:id', tasksController.changeTasks);
+tasksRouter.delete('/:id', tasksController.deleteTasks);
 
 module.exports = tasksRouter;

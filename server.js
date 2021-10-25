@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const app = require('./app');
 
-const mongodb = process.env.mongodb || 'mongodb://localhost/User';
+const mongodb = process.env.mongodb || 'mongodb://localhost/apidb';
 const port = process.env.port || 3000;
 
 mongoose.connect(mongodb, { useNewUrlParser: true, useUnifiedTopology: true }, (err) => {
