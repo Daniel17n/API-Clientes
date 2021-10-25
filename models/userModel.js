@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const { pbkdf2Sync, randomBytes } = require('crypto');
 
 const { Schema } = mongoose;
+const { pbkdf2Sync, randomBytes } = require('crypto');
 
 const userSchema = new Schema({
   name: { type: String, required: true },
