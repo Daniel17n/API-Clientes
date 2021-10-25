@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { pbkdf2Sync, randomBytes } = require('crypto');
 
 const { Schema } = mongoose;
 
@@ -11,4 +12,12 @@ const userSchema = new Schema({
   organization: { type: String },
 });
 
+function hash(password) {
+  this.salt = randomBytes(16).toString('hex');
+  this.password = pbkdf2Sync(password, this.salt, 1000, 64).toString('hex');
+}
+userSchema.pre('save', hash);
 module.exports = mongoose.model('User', userSchema);
+module.exports = {
+  hash,
+};

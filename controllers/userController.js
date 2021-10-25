@@ -20,7 +20,6 @@ function addUser(req, res) {
 
 function findUser(req, res) {
   const param = req.body;
-  console.log(req.body);
 
   User.find(param, (error, user) => {
     if (error) return res.status(404).send({ message: 'No user found', error });
