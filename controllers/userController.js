@@ -1,4 +1,5 @@
 const User = require('../models/userModel');
+const services = require('../middleware/services');
 
 /* function getModel(req, res) {
   res.send('De momento no hay modelos disponibles');
@@ -14,7 +15,7 @@ function addUser(req, res) {
   user.save((err, newUser) => {
     if (err) return res.status(400).send({ message: 'Error saving this user', error: err });
 
-    return res.status(200).send(newUser);
+    return res.status(200).send({ newUser, token: services.createToken(user) });
   });
 }
 

@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 const Tasks = require('../models/tasksModel');
 
 /* function getModel(req, res) {

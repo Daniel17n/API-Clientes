@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 const mongoose = require('mongoose');
 const app = require('./app');
 
@@ -12,4 +13,4 @@ mongoose.connect(mongodb, { useNewUrlParser: true, useUnifiedTopology: true }, (
   app.listen(port, console.log('Node server running on port 3000'));
 });
 
-module.export = app;
+module.exports = app;
