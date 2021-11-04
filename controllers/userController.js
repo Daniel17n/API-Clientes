@@ -1,5 +1,4 @@
 const User = require('../models/userModel');
-const services = require('../middleware/services');
 
 /* function getModel(req, res) {
   res.send('De momento no hay modelos disponibles');
@@ -15,7 +14,7 @@ function addUser(req, res) {
   user.save((err, newUser) => {
     if (err) return res.status(400).send({ message: 'Error saving this user', error: err });
 
-    return res.status(200).send({ newUser, token: services.createToken(user) });
+    return res.status(200).send(newUser);
   });
 }
 
@@ -30,7 +29,7 @@ function findUser(req, res) {
 }
 
 function changeUser(req, res) {
-  const { email } = req.params;
+  const { email } = req.params.email_id;
   const user = new User(req.body);
 
   user.findOneAndReplace(email, user, (err) => {
@@ -40,7 +39,7 @@ function changeUser(req, res) {
 }
 
 function deleteUser(req, res) {
-  const { email } = req.params;
+  const { email } = req.params.email_id;
   const user = new User(req.body);
   user.findByIdAndRemove(email, (err, nuser) => {
     if (err) return res.status(500).send(err);
