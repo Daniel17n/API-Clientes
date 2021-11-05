@@ -12,17 +12,14 @@ function getDB(req, res) {
 
 function addTasks(req, res) {
   const tasks = new Tasks(req.body);
-  let { orgName } = req.body;
+  let orgName = '';
   const { userEmail } = req.body;
 
-  User.findOne({ email: userEmail }, (error, user) => {
+  User.findOneAndUpdate({ email: userEmail }, { orgName: organization }, (error, user) => {
     if (error) return res.status(404).send({ message: 'No user found', error });
-    return user;
+    const { organization } = user;
+    orgName = organization;
   });
-
-  const { organization } = User;
-
-  orgName = organization;
 
   tasks.save((err, newTasks) => {
     if (err) return res.status(400).send({ message: 'Error saving this tasks', error: err });
