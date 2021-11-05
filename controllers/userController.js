@@ -20,9 +20,9 @@ function addUser(req, res) {
 }
 
 function findUser(req, res) {
-  const param = req.body;
+  const { email, password } = req.body;
 
-  User.find(param, (error, user) => {
+  User.findOne(email, password, (error, user) => {
     if (error) return res.status(404).send({ message: 'No user found', error });
 
     return res.status(200).send(user);
