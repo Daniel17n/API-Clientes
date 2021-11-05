@@ -9,13 +9,24 @@ const userSchema = new Schema({
   email: { type: String, unique: true, required: true },
   password: { type: String, required: true },
   genre: { type: String, required: true },
-  organization: { type: String },
+  organization: { type: String, default: 'none' },
+  salt: { type: String },
 });
 
-function hash(password) {
+function hashPassword(next) {
+  const user = this;
+
   this.salt = randomBytes(16).toString('hex');
-  this.password = pbkdf2Sync(password, this.salt, 1000, 64).toString('hex');
+  user.password = pbkdf2Sync(user.password, this.salt, 1000, 64, 'sha512').toString('hex');
+  return next();
 }
-userSchema.pre('save', hash);
+
+function checkPassword(npassword) {
+  const nnpassword = pbkdf2Sync(npassword, this.salt, 1000, 64, 'sha512').toString('hex');
+  return this.password === nnpassword;
+}
+
+userSchema.pre('save', hashPassword);
+userSchema.methods.checkPassword = checkPassword;
 
 module.exports = mongoose.model('User', userSchema);

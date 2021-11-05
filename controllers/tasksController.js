@@ -1,5 +1,6 @@
 /* eslint-disable no-console */
 const Tasks = require('../models/tasksModel');
+const User = require('../models/userModel');
 
 /* function getModel(req, res) {
   res.send('De momento no hay modelos disponibles');
@@ -11,6 +12,17 @@ function getDB(req, res) {
 
 function addTasks(req, res) {
   const tasks = new Tasks(req.body);
+  let { orgName } = req.body;
+  const { userEmail } = req.body;
+
+  User.findOne({ email: userEmail }, (error, user) => {
+    if (error) return res.status(404).send({ message: 'No user found', error });
+    return user;
+  });
+
+  const { organization } = User;
+
+  orgName = organization;
 
   tasks.save((err, newTasks) => {
     if (err) return res.status(400).send({ message: 'Error saving this tasks', error: err });
@@ -21,7 +33,6 @@ function addTasks(req, res) {
 
 function findTasks(req, res) {
   const param = req.body;
-  console.log(req.body);
 
   Tasks.find(param, (error, tasks) => {
     if (error) return res.status(404).send({ message: 'No tasks found', error });
@@ -34,7 +45,7 @@ function changeTasks(req, res) {
   const { taskID } = req.params;
   const tasks = new Tasks(req.body);
 
-  tasks.findOneAndReplace(taskID, tasks, (err) => {
+  Tasks.findOneAndReplace(taskID, tasks, (err) => {
     if (err) return res.status(404).send({ message: 'No tasks model to replace found', err });
     return res.status(200).send({ message: 'Tasks data replaced', tasks });
   });
@@ -42,8 +53,8 @@ function changeTasks(req, res) {
 
 function deleteTasks(req, res) {
   const { taskID } = req.params;
-  const tasks = new Tasks(req.body);
-  tasks.findByIdAndRemove(taskID, (err, ntasks) => {
+
+  Tasks.findByIdAndRemove(taskID, (err, ntasks) => {
     if (err) return res.status(500).send(err);
     if (!ntasks) return res.status(404).send({ message: 'Tasks not found' });
     return res.status(200).send({ message: 'Tasks deleted' });

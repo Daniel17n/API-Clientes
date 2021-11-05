@@ -20,9 +20,9 @@ function addUser(req, res) {
 }
 
 function findUser(req, res) {
-  const { email, password } = req.body;
+  const { email } = req.body;
 
-  User.findOne(email, password, (error, user) => {
+  User.findOne(email, (error, user) => {
     if (error) return res.status(404).send({ message: 'No user found', error });
 
     return res.status(200).send(user);
@@ -41,11 +41,20 @@ function changeUser(req, res) {
 
 function deleteUser(req, res) {
   const { email } = req.params;
-  const user = new User(req.body);
-  user.findByIdAndRemove(email, (err, nuser) => {
+  User.findByIdAndRemove(email, (err, nuser) => {
     if (err) return res.status(500).send(err);
     if (!nuser) return res.status(404).send({ message: 'User not found' });
     return res.status(200).send({ message: 'User deleted' });
+  });
+}
+
+function logIn(req, res) {
+  const { email } = req.body;
+  const { npassword } = req.body;
+  User.findOne({ email }, (error, user) => {
+    if (error) return res.status(404).send({ message: 'No user found', error });
+    if (user.checkPassword(npassword)) return res.status(200).send({ message: 'correct' });
+    return res.status(412).send({ message: 'log in error' });
   });
 }
 
@@ -56,4 +65,5 @@ module.exports = {
   findUser,
   changeUser,
   deleteUser,
+  logIn,
 };
