@@ -1,4 +1,7 @@
+/* eslint-disable consistent-return */
 const Orgs = require('../models/orgModel');
+const Tasks = require('../models/tasksModel');
+const User = require('../models/userModel');
 
 function addOrg(req, res) {
   const org = new Orgs(req.body);
@@ -39,9 +42,23 @@ function deleteOrg(req, res) {
   });
 }
 
+function shareTasks(req, res) {
+  const { organization } = req.body;
+
+  User.find(organization, (err, user) => {
+    if (err) return res.status(404).send({ message: 'This organization does not exists' });
+    const { userEmail } = user;
+    Tasks.find(userEmail, (error, tasks) => {
+      if (error) return res.status(404).send({ message: 'No user from this organization has a task' });
+      return tasks;
+    });
+  });
+}
+
 module.exports = {
   addOrg,
   findOrg,
   updateOrg,
   deleteOrg,
+  shareTasks,
 };
